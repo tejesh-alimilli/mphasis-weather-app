@@ -34,6 +34,31 @@ export class WeatherAppService {
     }
   }
 
+  async getCityInfo(lat: number, lon: number): Promise<CityInfo> {
+    try {
+      const fetchResponse = await fetch(
+        `${this.apiBaseUrl}geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${this.weatherStore.apiKey}`
+      )
+      if (!fetchResponse.ok) {
+        console.error('unnkown error in getting city details')
+      }
+
+      const list = (await fetchResponse.json()) as Array<CityInfo>
+      if (list.length > 0) {
+        return list[0]
+      }
+    } catch (error) {
+      console.error('error in getting location details', error)
+    }
+    return {
+      name: '',
+      lat: undefined,
+      lon: undefined,
+      state: '',
+      country: ''
+    }
+  }
+
   async getWeather(lat: number, lon: number): Promise<WeatherInfo> {
     try {
       const fetchResponse = await fetch(
