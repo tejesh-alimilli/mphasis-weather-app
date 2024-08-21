@@ -23,11 +23,17 @@ watch(
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ props.locationName }}</h1>
-    <div>Latitude: {{ cityInfo.lat }}</div>
-    <div>Longitude: {{ cityInfo.lon }}</div>
-    <div>State: {{ cityInfo.state }}</div>
-    <div>Country: {{ cityInfo.country }}</div>
+    <div v-if="cityInfo.name == ''">{{ props.locationName }} city not found</div>
+    <div v-else-if="cityInfo.country != 'US'">
+      {{ cityInfo.name }} is not US city, please search for US city
+    </div>
+    <template v-else>
+      <h1 class="green">{{ cityInfo.name }}</h1>
+      <div>Latitude: {{ cityInfo.lat }}</div>
+      <div>Longitude: {{ cityInfo.lon }}</div>
+      <div>State: {{ cityInfo.state }}</div>
+      <div>Country: {{ cityInfo.country }}</div>
+    </template>
   </div>
 </template>
 
