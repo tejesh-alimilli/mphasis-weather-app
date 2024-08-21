@@ -1,7 +1,7 @@
 export interface CityInfo {
   name: string
-  lat: number
-  lon: number
+  lat: number | undefined
+  lon: number | undefined
   country: string
   state: string
 }
