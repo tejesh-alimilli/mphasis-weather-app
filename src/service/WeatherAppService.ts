@@ -6,12 +6,13 @@ export class WeatherAppService {
   weatherStore = useWeatherAppStore()
 
   // ideally should be configured in an environemnt specific configuration file
-  baseUrl = 'http://api.openweathermap.org/'
+  apiBaseUrl = 'http://api.openweathermap.org/'
+  imageBaseUrl = 'https://openweathermap.org/'
 
   async getLatLong(locationName: string): Promise<CityInfo> {
     try {
       const fetchResponse = await fetch(
-        `${this.baseUrl}geo/1.0/direct?q=${locationName}&limit=1&appid=${this.weatherStore.apiKey}`
+        `${this.apiBaseUrl}geo/1.0/direct?q=${locationName}&limit=1&appid=${this.weatherStore.apiKey}`
       )
       if (!fetchResponse.ok) {
         console.error('unnkown error in getting city details')
@@ -36,7 +37,7 @@ export class WeatherAppService {
   async getWeather(lat: number, lon: number): Promise<WeatherInfo> {
     try {
       const fetchResponse = await fetch(
-        `${this.baseUrl}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.weatherStore.apiKey}`
+        `${this.apiBaseUrl}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.weatherStore.apiKey}`
       )
       if (!fetchResponse.ok) {
         console.error('unnkown error in getting weather details')
@@ -48,5 +49,9 @@ export class WeatherAppService {
       console.error('error in getting weather info', error)
     }
     return {} as WeatherInfo
+  }
+
+  getWeatherIconUrl(iconId: string): string {
+    return `${this.imageBaseUrl}img/wn/${iconId}@2x.png`
   }
 }
