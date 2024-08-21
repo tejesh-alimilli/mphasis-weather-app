@@ -21,15 +21,19 @@ function searchClicked() {
   childLocationName.value = locationName.value
 }
 
-onMounted(() => {
+function getCurrentLocationWeather() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-      if (locationName.value == '') {
-        lat.value = position.coords.latitude
-        lon.value = position.coords.longitude
-        childLocationName.value = ''
-      }
+      lat.value = position.coords.latitude
+      lon.value = position.coords.longitude
+      childLocationName.value = ''
     })
+  }
+}
+
+onMounted(() => {
+  if (locationName.value == '') {
+    getCurrentLocationWeather()
   }
 })
 </script>
@@ -55,9 +59,10 @@ onMounted(() => {
         v-model="locationName"
       />
       <br /><br />
-      <button type="submit" @click="searchClicked">Go</button>
+      <button type="button" @click="getCurrentLocationWeather">My Location</button>
+      <button type="submit" @click="searchClicked">Search</button>
     </form>
-    <br /><br />
+    <br />
     <WeatherDetails :location-name="childLocationName" :lat="lat" :lon="lon"></WeatherDetails>
   </main>
 </template>
@@ -80,5 +85,6 @@ button {
   min-height: 30px;
   border-radius: 5px;
   border: #ccc 2px solid;
+  margin: auto 5px;
 }
 </style>
