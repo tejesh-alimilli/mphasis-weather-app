@@ -6,6 +6,8 @@ import { ref, watch } from 'vue'
 
 const props = defineProps<{
   locationName: string
+  lat: number | undefined
+  lon: number | undefined
 }>()
 
 const cityInfo = ref({} as CityInfo)
