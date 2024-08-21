@@ -49,6 +49,13 @@ watch(
       <div>Country: {{ cityInfo.country }}</div>
     </template>
   </div>
+  <div v-if="weatherInfo.main">
+    The temprature is {{ weatherInfo.main?.temp }} but feels like {{ weatherInfo.main?.feels_like }}
+  </div>
+  <div v-for="weather in weatherInfo.weather" :key="weather.id">
+    <img :src="weatherAppService.getWeatherIconUrl(weather.icon)" :alt="weather.description" />
+    <span>Now the weather is {{ weather.description }}</span>
+  </div>
 </template>
 
 <style scoped></style>
