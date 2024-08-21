@@ -18,18 +18,16 @@ export class WeatherAppService {
       }
 
       const list = (await fetchResponse.json()) as Array<CityInfo>
-      if (list.length == 0) {
-        return {} as CityInfo
+      if (list.length > 0) {
+        return list[0]
       }
-
-      return list[0]
     } catch (error) {
       console.error('error in getting location details', error)
     }
     return {
-      name: locationName,
-      lat: 0,
-      lon: 0,
+      name: '',
+      lat: undefined,
+      lon: undefined,
       state: '',
       country: ''
     }

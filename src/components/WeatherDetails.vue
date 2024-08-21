@@ -36,7 +36,7 @@ watch(
 </script>
 
 <template>
-  <div class="greetings">
+  <div>
     <div v-if="cityInfo.name == ''">{{ props.locationName }} city not found</div>
     <div v-else-if="cityInfo.country != 'US'">
       {{ cityInfo.name }} is not US city, please search for US city
