@@ -46,25 +46,26 @@ watch(
 
 <template>
   <template v-if="props.locationName != '' || (props.lat != undefined && props.lon != undefined)">
-    <div v-if="cityInfo.name == ''">{{ props.locationName }} city not found</div>
-    <div v-else-if="cityInfo.country != 'US'">
+    <div class="error" v-if="cityInfo.name == ''">{{ props.locationName }} city not found</div>
+    <div class="error" v-else-if="cityInfo.country != 'US'">
       {{ cityInfo.name }} is not US city, please search for US city
     </div>
     <template v-else>
       <h1>
-        <template v-if="props.locationName == ''">Current Location: </template>
+        <span class="info" v-if="props.locationName == ''">Current Location: </span>
         {{ cityInfo.name }}
       </h1>
-      <div>Latitude: {{ cityInfo.lat }}</div>
-      <div>Longitude: {{ cityInfo.lon }}</div>
-      <div>State: {{ cityInfo.state }}</div>
-      <div>Country: {{ cityInfo.country }}</div>
+      <!-- <div>Latitude: {{ cityInfo.lat }}</div>
+      <div>Longitude: {{ cityInfo.lon }}</div> -->
+      <span>State: {{ cityInfo.state }}</span>
+      &nbsp;
+      <span>Country: {{ cityInfo.country }}</span>
       <br /><br />
       <div v-if="weatherInfo.main">
         The temprature is {{ weatherInfo.main?.temp }} but feels like
         {{ weatherInfo.main?.feels_like }}
       </div>
-      <div v-for="weather in weatherInfo.weather" :key="weather.id">
+      <div class="weather-line" v-for="weather in weatherInfo.weather" :key="weather.id">
         <img :src="weatherAppService.getWeatherIconUrl(weather.icon)" :alt="weather.description" />
         <span>Now the weather is {{ weather.description }}</span>
       </div>
@@ -72,4 +73,18 @@ watch(
   </template>
 </template>
 
-<style scoped></style>
+<style scoped>
+img {
+  display: inline-block;
+}
+.weather-line {
+  display: flex;
+  align-items: center;
+}
+.error {
+  color: brown;
+}
+.info {
+  color: lightblue;
+}
+</style>

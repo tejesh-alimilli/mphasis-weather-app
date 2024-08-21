@@ -35,17 +35,50 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Welcome to Weather App</h1>
   <main>
-    API Key: &nbsp;
-    <!-- To avoid hardcoding API Key made it into a input field, save to local storage for convinience -->
-    <input type="text" placeholder="Enter openweathermap API Key here" v-model="apiKey" />
-    <br /><br />
-    Enter any US City Name: &nbsp;
-    <input type="search" placeholder="Enter US City Name here" v-model="locationName" />
-    <br /><br />
-    <button @click="searchClicked">Go</button>
+    <h1>Welcome to Weather App</h1>
+    <form @submit.prevent="searchClicked">
+      <label for="apiKey"> API Key:</label> &nbsp;
+      <!-- To avoid hardcoding API Key made it into a input field, save to local storage for convinience -->
+      <input
+        name="apiKey"
+        type="text"
+        placeholder="Enter openweathermap API Key here"
+        v-model="apiKey"
+      />
+      <br /><br />
+      <label for="locationName">Enter any US City Name:</label> &nbsp;
+      <input
+        name="locationName"
+        type="search"
+        placeholder="Enter US City Name here"
+        v-model="locationName"
+      />
+      <br /><br />
+      <button type="submit" @click="searchClicked">Go</button>
+    </form>
     <br /><br />
     <WeatherDetails :location-name="childLocationName" :lat="lat" :lon="lon"></WeatherDetails>
   </main>
 </template>
+
+<style lang="css" scoped>
+main {
+  width: 900px;
+  margin: 0px auto;
+}
+label {
+  font-weight: bold;
+}
+input {
+  padding: 5px;
+  border-radius: 5px;
+  border: #ccc 2px solid;
+}
+button {
+  min-width: 100px;
+  min-height: 30px;
+  border-radius: 5px;
+  border: #ccc 2px solid;
+}
+</style>

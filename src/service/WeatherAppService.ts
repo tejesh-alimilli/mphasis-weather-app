@@ -77,6 +77,6 @@ export class WeatherAppService {
   }
 
   getWeatherIconUrl(iconId: string): string {
-    return `${this.imageBaseUrl}img/wn/${iconId}@2x.png`
+    return `${this.imageBaseUrl}img/wn/${iconId}.png`
   }
 }
