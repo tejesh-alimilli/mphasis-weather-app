@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CityInfo } from '@/domain/CityInfo'
+import type { WeatherInfo } from '@/domain/WeatherInfo'
 import { WeatherAppService } from '@/service/WeatherAppService'
 import { ref, watch } from 'vue'
 
@@ -8,12 +9,25 @@ const props = defineProps<{
 }>()
 
 const cityInfo = ref({} as CityInfo)
+const weatherInfo = ref({} as WeatherInfo)
 const weatherAppService = new WeatherAppService()
 
 watch(
   props,
   async () => {
     cityInfo.value = await weatherAppService.getLatLong(props.locationName)
+  },
+  {
+    immediate: true
+  }
+)
+
+watch(
+  cityInfo,
+  async () => {
+    if (cityInfo.value.lat != undefined && cityInfo.value.lon != undefined) {
+      weatherInfo.value = await weatherAppService.getWeather(cityInfo.value.lat, cityInfo.value.lon)
+    }
   },
   {
     immediate: true

@@ -1,4 +1,5 @@
 import type { CityInfo } from '@/domain/CityInfo'
+import type { WeatherInfo } from '@/domain/WeatherInfo'
 import { useWeatherAppStore } from '@/stores/weather'
 
 export class WeatherAppService {
@@ -32,5 +33,22 @@ export class WeatherAppService {
       state: '',
       country: ''
     }
+  }
+
+  async getWeather(lat: number, lon: number): Promise<WeatherInfo> {
+    try {
+      const fetchResponse = await fetch(
+        `${this.baseUrl}data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.weatherStore.apiKey}`
+      )
+      if (!fetchResponse.ok) {
+        console.error('unnkown error in getting weather details')
+      }
+
+      console.log(fetchResponse.text)
+      return (await fetchResponse.json()) as WeatherInfo
+    } catch (error) {
+      console.error('error in getting weather info', error)
+    }
+    return {} as WeatherInfo
   }
 }
